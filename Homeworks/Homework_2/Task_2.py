@@ -33,20 +33,18 @@ def get_number() -> list:
             print('IndexError: Неверный ввод. Попробуйте еще раз.')
 
 
-def calculate_amount(first_fraction: list, second_fraction: list):
+def calculate_amount(first_fraction: list,
+                     second_fraction: list) -> None:
     numerator_one = first_fraction[0]
     numerator_two = second_fraction[0]
     denominator_one = first_fraction[1]
     denominator_two = second_fraction[1]
-    """
-    Нахождение НОК(lcm)
-    """
+    # Нахождение НОК(lcm)
     lcm_num = math.lcm(denominator_one, denominator_two)
     numerator_final = ((lcm_num // denominator_one) * numerator_one
                        + (lcm_num // denominator_two) * numerator_two)
-    """
-    Сокращение дроби
-    """
+
+    # Сокращение дроби
     calc_fraction = get_gcd(numerator_final, lcm_num)
     print(
         f'\n{numerator_one}/{denominator_one} '
@@ -54,7 +52,8 @@ def calculate_amount(first_fraction: list, second_fraction: list):
         f'= {calc_fraction[0]}/{calc_fraction[1]}')
 
 
-def calculate_multiplication(first_fraction: list, second_fraction: list) -> str:
+def calculate_multiplication(first_fraction: list,
+                             second_fraction: list) -> None:
     numerator_one = first_fraction[0]
     numerator_two = second_fraction[0]
     denominator_one = first_fraction[1]
@@ -70,11 +69,7 @@ def calculate_multiplication(first_fraction: list, second_fraction: list) -> str
         f'= {calc_fraction[0]}/{calc_fraction[1]}')
 
 
-"""
-сокращение дробей через НОД
-"""
-
-
+# сокращение дробей через НОД
 def get_gcd(numerator: int, denominator: int) -> list:
     gcd = math.gcd(numerator, denominator)
     numerator = numerator // gcd
@@ -85,9 +80,14 @@ def get_gcd(numerator: int, denominator: int) -> list:
 
 fraction_1 = get_number()
 fraction_2 = get_number()
+
+check_amount = (fractions.Fraction(fraction_1[0], fraction_1[1])
+                + fractions.Fraction(fraction_2[0], fraction_2[1]))
+
+check_multiplication = (fractions.Fraction(fraction_1[0], fraction_1[1])
+                        * fractions.Fraction(fraction_2[0], fraction_2[1]))
+
 calculate_amount(fraction_1, fraction_2)
-print(
-    f'Проверка сложения: {fractions.Fraction(fraction_1[0], fraction_1[1]) + fractions.Fraction(fraction_2[0], fraction_2[1])}\n')
+print(f'Проверка сложения: {check_amount}\n')
 calculate_multiplication(fraction_1, fraction_2)
-print(
-    f'Проверка умножения: {fractions.Fraction(fraction_1[0], fraction_1[1]) * fractions.Fraction(fraction_2[0], fraction_2[1])}\n')
+print(f'Проверка умножения: {check_multiplication}\n')
