@@ -13,7 +13,7 @@ MAX_ACCOUNT = 5000000
 account = 0
 count_refill = 0
 count_withdrawal = 0
-list_money = []
+operations_history = []
 
 
 # Получение суммы денег
@@ -30,31 +30,32 @@ def get_money(input_string: str) -> int:
 
 
 # добавить деньги на счет
-def refill_account(num: int, list_operation: list) -> None:
+def refill_account(num: int, list_history: list) -> None:
     global account
     account += num
-    list_operation.append(num)
+    list_history.append(num)
+
 
 # добавление 3%
-def account_proc(list_operation) -> None:
+def account_proc(list_history: list) -> None:
     global account
     num = account / 100 * COMM_REFILL
-    refill_account(num, list_operation)
+    refill_account(num, list_history)
 
 
 # снятие денег со счета
-def take_account(num: int, list_operation: list) -> None:
+def take_account(num: int, list_history: list) -> None:
     global account
     account -= num
-    list_operation.append(-num)
+    list_history.append(-num)
 
 
 # снятие 10% на роскошь
-def take_tax(list_operation: list) -> None:
+def take_tax(list_history: list) -> None:
     global account
     if account > MAX_ACCOUNT:
         num = account / 100 * TAX
-        take_account(num, list_operation)
+        take_account(num, list_history)
 
 
 # подсчет суммы для снятия и 1,5%
@@ -69,40 +70,40 @@ def check_money(num: int | float) -> int | float:
     return num
 
 
-# print('Здравствуйте.Это программа банкомат\n')
-# while True:
-#     choice = int(input('Выберите желаемое действие:\n'\
-#       '1 - Пополнить счет\n'\
-#       '2 - Снять деньги со счета\n'\
-#       '3 - Выход\n'))
-#     take_tax(list_money)
-#     match choice:
-#         case 1:
-#             number = get_money('Введите сумму для зачисления на счет:\n')
-#             refill_account(number, list_money)
-#             count_refill += 1
-#             if count_refill == 3:
-#                 account_proc(list_money)
-#                 count_refill = 0
-#             print(f'У вас на счету: {account} рублей')
-#             print(list_money)
-#         case 2:
-#             number = get_money('Введите сумму для снятия со счета:\n')
-#             number = check_money(number)
-#             if number < account:
-#                 take_account(number, list_money)
-#                 count_withdrawal += 1
-#                 if count_withdrawal == 3:
-#                     account_proc(list_money)
-#                     count_withdrawal = 0
-#             else:
-#                 print('Недостаточно средств')
-#             print(f'У вас на счету: {account} рублей')
-#             print(list_money)
-#         case 3:
-#             print('До свидания')
-#             print(f'У вас на счету: {account} рублей')
-#             print(list_money)
-#             break
-#         case _:
-#             print('Это не то ...')
+print('Здравствуйте.Это программа банкомат\n')
+while True:
+    choice = int(input('Выберите желаемое действие:\n'
+                       '1 - Пополнить счет\n'
+                       '2 - Снять деньги со счета\n'
+                       '3 - История операций\n'
+                       '4 - Выход\n'))
+    take_tax(operations_history)
+    match choice:
+        case 1:
+            number = get_money('Введите сумму для зачисления на счет:\n')
+            refill_account(number, operations_history)
+            count_refill += 1
+            if count_refill == 3:
+                account_proc(operations_history)
+                count_refill = 0
+            print(f'У вас на счету: {account} рублей')
+        case 2:
+            number = get_money('Введите сумму для снятия со счета:\n')
+            number = check_money(number)
+            if number < account:
+                take_account(number, operations_history)
+                count_withdrawal += 1
+                if count_withdrawal == 3:
+                    account_proc(operations_history)
+                    count_withdrawal = 0
+            else:
+                print('Недостаточно средств')
+            print(f'У вас на счету: {account} рублей')
+        case 3:
+            print(operations_history)
+        case 4:
+            print('До свидания')
+            print(f'У вас на счету: {account} рублей')
+            break
+        case _:
+            print('Ошибка ввода')
