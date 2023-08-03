@@ -11,7 +11,6 @@
 # или не совпадают в ваших решениях.
 
 
-
 user_input = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 frequency_dict = {}
 

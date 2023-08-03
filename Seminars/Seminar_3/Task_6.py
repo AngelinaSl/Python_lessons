@@ -5,7 +5,8 @@
 # Текст выравнивается по правому краю так, чтобы у самого длинного
 # слова был один пробел между ним и номером строки.
 
-text_string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut ex eget libero fermentum tempus. Maecenas nec tristique metus"
+text_string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
+              "Nullam ut ex eget libero fermentum tempus. Maecenas nec tristique metus"
 
 words_list = text_string.split()
 words_list = sorted(words_list)
